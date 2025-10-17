@@ -10,6 +10,17 @@ window.addEventListener("DOMContentLoaded", () => {
     squares.forEach(square => {
         square.classList.add("square");
 
+        square.addEventListener("mouseover", () => {
+            if (gameActive && !square.textContent) {
+                square.classList.add("hover");
+            }
+        });
+
+        square.addEventListener("mouseout", () => {
+            square.classList.remove("hover");
+        });
+
+
         square.addEventListener("click", () => handleMove(square));
     });
 
