@@ -20,7 +20,6 @@ window.addEventListener("DOMContentLoaded", () => {
             square.classList.remove("hover");
         });
 
-
         square.addEventListener("click", () => handleMove(square));
     });
 
@@ -30,7 +29,30 @@ window.addEventListener("DOMContentLoaded", () => {
         square.textContent = currentPlayer;
         square.classList.add(currentPlayer);
 
+        if (checkWinner(currentPlayer)) {
+            status.textContent = "Congratulations! " + currentPlayer + " is the Winner!";
+            status.classList.add("you-won");
+            gameActive = false;
+            return;
+        }
+
         currentPlayer = currentPlayer === "X" ? "O" : "X";
     }
 
+    function checkWinner(player) {
+        const combos = [
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6],
+        ];
+
+        return combos.some(combo =>
+            combo.every(index => squares[index].textContent === player)
+        );
+    }
 });
