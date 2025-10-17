@@ -7,9 +7,11 @@ window.addEventListener("DOMContentLoaded", () => {
     let currentPlayer = "X";
     let gameActive = true;
 
+    // --- Board Initialization ---
     squares.forEach(square => {
         square.classList.add("square");
 
+        // Hover effects
         square.addEventListener("mouseover", () => {
             if (gameActive && !square.textContent) {
                 square.classList.add("hover");
@@ -20,9 +22,11 @@ window.addEventListener("DOMContentLoaded", () => {
             square.classList.remove("hover");
         });
 
+        // Handle click
         square.addEventListener("click", () => handleMove(square));
     });
 
+    // --- Move Handling ---
     function handleMove(square) {
         if (!gameActive || square.textContent) return;
 
@@ -36,9 +40,11 @@ window.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        // Switch player
         currentPlayer = currentPlayer === "X" ? "O" : "X";
     }
 
+    // --- Check for Winner ---
     function checkWinner(player) {
         const combos = [
             [0,1,2],
@@ -55,4 +61,17 @@ window.addEventListener("DOMContentLoaded", () => {
             combo.every(index => squares[index].textContent === player)
         );
     }
+
+    // --- Restart Game ---
+    newGameBtn.addEventListener("click", () => {
+        squares.forEach(square => {
+            square.textContent = "";
+            square.classList.remove("X", "O", "hover");
+        });
+
+        currentPlayer = "X";
+        gameActive = true;
+        status.textContent = "Move your mouse over a square and click to play!";
+        status.classList.remove("you-won");
+    });
 });
